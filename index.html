@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bibites Builder</title>
+    <title>Darwin Editor</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <!-- Builder for Bibites template in the game The Bibites -->
+    <!-- Editor for Bibites template in the game The Bibites -->
     <div class="container">
-        <h1>Bibites Editor</h1>
+        <h1>Darwin Editor</h1>
         <div class="bibiteUpload" id="bibiteDropZone">
             <label for="bibiteInput">Upload Bibite Template</label>
             <input type="file" id="bibiteInput" accept=".bb8template">
@@ -28,23 +28,19 @@
                 <textarea id="description" name="description" oninput="changeHeight(this)" required>Description for your bibite goes here.</textarea>
             </div>
             <div class="input-container">
-                <label for="generation">Generation</label>
-                <input type="number" min="0" id="generation" name="generation" value="0" required>
-            </div>
-            <div class="input-container">
                 <label for="version">Version</label>
                 <select id="version" name="version">
                     <option value="0.6.0.1">0.6.0.1</option>
                     <option value="0.6">0.6</option>
-                    <option value="0.5.1">0.5.1</option>
-                    <option value="0.5">0.5</option>
+                    <!--<option value="0.5.1">0.5.1</option>
+                    <option value="0.5">0.5</option>-->
                 </select>
             </div>
             <div class="input-container" id="nodes">
                 <label for="nodes">Nodes</label>
                 <div class="separator-container" id="outputNodes"></div>
                 <div class="separator-container mix-container" id="hiddenNodes" style="display: none"></div>
-                <button onclick="addNode(event)">Add Node</button>
+                <button onclick="addNode(event)">New Hidden Node</button>
             </div>
             <div class="input-container">
                 <label for="synapses">Synapses</label>
@@ -53,6 +49,7 @@
             </div>
             <div class="input-container">
                 <label for="genes">Genes</label>
+                <div class="options-preview-container">
                 <div class="separator-container" id="genes">
                     <div class="gene">
                         <label>Lay Time</label>
@@ -300,12 +297,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="separator-container" id="previewContainer">
+                <div class="separator-container preview-container" id="previewContainer">
                     <canvas id="previewCanvas" width="100" height="50"></canvas>
+                </div>
                 </div>
             </div>
         </form>
         <button id="generate" onclick="generateBibite()">Generate</button>
+    </div>
+    <div class="lightDarkToggle" id="lightDarkToggle">
+        <input type="checkbox" id="lightDarkCheck">
+        <div class="lightDarkDecor"></div>
+    </div>
+    <div class="popup-container" id="message">
+        <div class="popup">
+            <h2 id="messageTitle"></h2>
+            <span id="messageText"></span>
+            <button onclick="closeMessage()">Close</button>
+        </div>
     </div>
     <script src="./utils.js"></script>
     <script src="./preview.js"></script>

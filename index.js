@@ -51,22 +51,7 @@ let outputMapping = {
     "Want 2 Attack": [46, 0, 1]
 };
 
-let hiddenMapping = {
-    "Hidden0": 47,
-    "Hidden1": 48,
-    "Hidden2": 49,
-    "Hidden3": 50,
-    "Hidden4": 51,
-    "Hidden5": 52,
-    "Hidden7": 53,
-    "Hidden8": 54,
-    "Hidden9": 55,
-    "Hidden10": 56,
-    "Hidden12": 57,
-    "Hidden13": 58
-};
-
-let nodeType = {
+let functionMapping = {
     "Sigmoid": 1,
     "Linear": 2,
     "TanH": 3,
@@ -79,6 +64,14 @@ let nodeType = {
     "Mult": 10,
     "Integrator": 11,
     "Inhibitory": 12
+};
+
+let hiddenNodes = [];
+
+/* Initialize the interface */
+if (localStorage.getItem('theme') === 'true') {
+    document.body.classList.add('light');
+    document.getElementById('lightDarkCheck').checked = true;
 }
 
 let bibiteDropZone = document.getElementById('bibiteDropZone');
@@ -101,56 +94,16 @@ bibiteDropZone.addEventListener('drop', (e) => {
     e.preventDefault();
 
     const dt = e.dataTransfer;
-    document.getElementById('bibiteInput').files = dt.files;
-    fileUpload(dt.files[0]);
+    $('bibiteInput').files = dt.files;
+    fileUpload(dt.files[0], $('bibiteInput'));
 })
 
 document.getElementById('bibiteInput').addEventListener('change', () => {
-    const files = document.getElementById('bibiteInput').files;
-    fileUpload(files[0]);
+    const files = $('bibiteInput').files;
+    fileUpload(files[0], $('bibiteInput'));
 }, false);
 
-function fileUpload(file) {
-    const reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = function() {
-        const bibite = JSON.parse(reader.result);
-        document.getElementById('name').value = bibite.name;
-        document.getElementById('speciesName').value = bibite.speciesName;
-        document.getElementById('description').value = bibite.description.replace(/\u000b/g, '\r\n');
-        changeHeight(document.getElementById('description'));
-        document.getElementById('version').value = bibite.version;
-
-        let nodes = document.getElementById('nodes');
-        nodes.querySelector('#outputNodes').innerHTML = '';
-        nodes.querySelector('#hiddenNodes').innerHTML = '';
-
-        let bibiteNodes = bibite.nodes.filter(node => !Object.values(inputMapping).includes(node.Index));
-        let outputNodes = bibiteNodes.filter(node => Object.values(outputMapping).map(x => x[0]).includes(node.Index));
-
-        for (let i = 0; i < outputNodes.length; i++) {
-            generateOutputNodeElement(outputNodes[i].Index, outputNodes[i].baseActivation);
-        }
-
-        let hiddenNodes = bibiteNodes.filter(node => !Object.values(outputMapping).map(x => x[0]).includes(node.Index));
-
-        for (let i = 0; i < hiddenNodes.length; i++) {
-            generateHiddenNodeElement(hiddenNodes[i].Index, hiddenNodes[i].baseActivation);
-        }
-
-        $('synapses').innerHTML = '';
-        for (let i = 0; i < bibite.synapses.length; i++) {
-            generateSynapseElement(false, bibite.synapses[i].NodeIn, false, bibite.synapses[i].NodeOut, bibite.synapses[i].Weight, bibite.synapses[i].En);
-        }
-
-        let genes = document.getElementById('genes').children;
-        for (let gene of genes) {
-            let geneName = gene.querySelector('label').innerText;
-            gene.querySelector('.slider-container input[type="number"]').value = bibite.genes[geneName.replace(/\s/g, '')];
-            gene.querySelector('.slider-container input[type="range"]').value = bibite.genes[geneName.replace(/\s/g, '')];
-        }
-    };
-}
+drawBibite();
 
 let outputNodes = document.querySelectorAll('#outputNodes')[0];
 outputNodes.classList.add('separator-container');
@@ -176,16 +129,14 @@ for (let gene of genes) {
 
 function generateBibite() {
     if (document.querySelector('#bibitesForm').checkValidity() === false) {
-        console.log(document.querySelector('#bibitesForm').checkValidity());
         alert('Please fill all the fields');
         return;
     }
     
     const name = document.getElementById('name').value;
     const speciesName = document.getElementById('speciesName').value;
-    const description = document.getElementById('description').value;
+    const description = document.getElementById('description').value.replace(/\n/g, '\u000b');
     const version = document.getElementById('version').value;
-    const generation = document.getElementById('generation').value;
 
     const outputNodes = document.getElementById('outputNodes').querySelectorAll('.node');
     const hiddenNodes = document.getElementById('hiddenNodes').querySelectorAll('.node');
@@ -194,46 +145,40 @@ function generateBibite() {
     for (let i = 0; i < Object.keys(inputMapping).length; i++) {
         nodesArray.push({
             "Type": 0,
-            "Index": inputMapping[Object.keys(inputMapping)[i]],
-            "Inov": i + 1,
+            "Index": i,
+            "Inov": 0,
             "Desc": Object.keys(inputMapping).find(key => inputMapping[key] === i).replace(/\s/g, ''),
             "baseActivation": 0,
         });
     }
-
-    let tempTotal = Object.keys(inputMapping).length;
 
     for (let i = 0; i < outputNodes.length; i++) {
         const baseActivation = outputNodes[i].querySelector('#baseActivation').value;
         nodesArray.push({
             "Type": outputMapping[outputNodes[i].querySelector('label').innerText][2],
             "Index": outputMapping[outputNodes[i].querySelector('label').innerText][0],
-            "Inov": i + tempTotal + 1,
+            "Inov": 0,
             "Desc": outputNodes[i].querySelector('label').innerText.replace(/\s/g, ''),
             "baseActivation": parseFloat(baseActivation),
         });
     }
 
-    tempTotal += Object.keys(outputMapping).length;
-
     for (let i = 0; i < hiddenNodes.length; i++) {
-        const type = hiddenNodes[i].querySelector('select[name="type"]').value;
-        const baseActivation = hiddenNodes[i].querySelector('#weight').value;
         nodesArray.push({
-            "Type": type,
-            "Index": i + tempTotal,
+            "Type": parseInt(hiddenNodes[i].querySelector('select[name="type"]').value),
+            "Index": parseInt(hiddenNodes[i].querySelector('#nodeIndex').innerHTML),
             "Inov": 0,
-            "Desc": Object.keys(hiddenMapping).find(key => hiddenMapping[key] === type).replace(/\s/g, ''),
-            "baseActivation": parseFloat(baseActivation),
+            "Desc": hiddenNodes[i].querySelector('#description').value,
+            "baseActivation": parseFloat(hiddenNodes[i].querySelector('#baseActivation').value),
         });
     }
 
     const synapses = document.getElementById('synapses').querySelectorAll('.synapse');
     const synapsesArray = [];
     for (let i = 0; i < synapses.length; i++) {
-        const nodeIn = synapses[i].querySelector('select#nodeIn').value;
-        const nodeOut = synapses[i].querySelector('select#nodeOut').value;
-        const weight = synapses[i].querySelector('input#weight').value;
+        const nodeIn = parseInt(synapses[i].querySelector('select#nodeIn').value);
+        const nodeOut = parseInt(synapses[i].querySelector('select#nodeOut').value);
+        const weight = parseFloat(synapses[i].querySelector('input#weight').value);
         const enabled = synapses[i].querySelector('input[name="enabled"]').checked;
         synapsesArray.push({
             "Inov": 0,
@@ -256,7 +201,6 @@ function generateBibite() {
         "name": name,
         "speciesName": speciesName,
         "description": description,
-        "generation": generation,
         "version": version,
         "nodes": nodesArray,
         "synapses": synapsesArray,
@@ -286,3 +230,14 @@ function changeHeight(e) {
     e.style.height = 'auto';
     e.style.height = e.scrollHeight - 20 + 'px';
 }
+
+$("lightDarkToggle").addEventListener('click', function() {
+    let checkbox = $("lightDarkCheck");
+    checkbox.checked = !checkbox.checked;
+    if (checkbox.checked) {
+        document.body.classList.add('light');
+    } else {
+        document.body.classList.remove('light');
+    }
+    localStorage.setItem('theme', checkbox.checked);
+});

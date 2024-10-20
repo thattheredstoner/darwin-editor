@@ -77,5 +77,5 @@ async function drawBibite() {
 
     // Draw meat
     let meatSprite = await loadImage(`./assets/misc/medium_meat.png`);
-    previewCtx.drawImage(meatSprite, x, previewHeight/2 + meatSprite.height * 2, 10, 10);
+    previewCtx.drawImage(meatSprite, x, previewHeight/2 + meatSprite.height, 10, 10);
 }
