@@ -130,12 +130,16 @@ async function drawBibite() {
         int hueShift = BibiteTemplateGenePreviewer.HueShift;
         double num2 = (double) template.genes[25]
         eyeMaterial.SetFloat(hueShift, (float) num2);
-
-        this.Bibite.transform.rotation = Quaternion.Euler(0.0f, 0.0f, (float) (-90.0 - 2.0 * ((double) this.carn - 0.5) * 57.295780181884766 * (double) Mathf.Atan((float) (40.0 / (112.0 * (double) Mathf.Sqrt(this.size))))));
 */
     
-    let color = geneToColor(genes[5], genes[6], genes[7]);
+    let tempColor = geneToColor(genes[5], genes[6], genes[7]);
+    console.log(tempColor);
+
+    let color = geneToBodyColor(tempColor[0], tempColor[1], tempColor[2]);
     console.log(color);
+
+    let eyeColor = geneToEyeColor(tempColor, genes[25]);
+    console.log(eyeColor);
 
     let num3 = Math.max(0, genes[26]) + Math.max(0, genes[27]) + Math.max(0, genes[28]) + Math.max(0, genes[29]) + Math.max(0, genes[30]) + Math.max(0, genes[31]) + Math.max(0, genes[32]);
     let carn = genes[16];
@@ -163,6 +167,12 @@ async function drawBibite() {
     let bodyWidth = partsInfo[`${Object.keys(sizes)[sizeIndex]}_body`][0];
     let bodyHeight = partsInfo[`${Object.keys(sizes)[sizeIndex]}_body`][1];
 
+    mouthSprite = changeColour(mouthSprite, color[0], color[1], color[2]);
+    exoskeletonSprite = changeColour(exoskeletonSprite, color[0], color[1], color[2]);
+    eyesSprite = changeColour(eyesSprite, eyeColor[0], eyeColor[1], eyeColor[2]);
+    armsSprite = changeColour(armsSprite, color[0], color[1], color[2]);
+    bodySprite = changeColour(bodySprite, color[0], color[1], color[2]);
+
     let bibiteWidth = mouthHeight + bodyHeight + eyesHeight + exoskeletonHeight;
     let bibiteHeight = Math.max(mouthWidth, bodyWidth, eyesWidth, exoskeletonWidth);
 
@@ -189,11 +199,6 @@ async function drawBibite() {
         "\nArms Width: " + armsSprite.width,
         "\nArms Height: " + armsSprite.height
     )
-
-    /*ctx.beginPath();
-    ctx.arc(bibiteX, bibiteY, bibiteWidth * 2, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.closePath();*/
 
     let offsetMouth = [0, 0];
     let offsetEyes = [0, 0];
