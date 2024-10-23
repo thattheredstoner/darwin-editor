@@ -20,6 +20,10 @@ Ensure you have the following installed:
 
 - A modern web browser (Chrome, Firefox, Edge, etc.)
 
+### No Installation
+1. **Navigate to the site**: https://thattheredstoner.github.io/darwin-editor/
+2. **Start using the editor**: No installation required!
+
 ### Installation
 
 1. Clone the repository:
@@ -51,6 +55,7 @@ Ensure you have the following installed:
 
 ## Roadmap
 
+- Graphical preview of the genes.
 - Graphical preview of the neural network structure.
 - Graphical editor for the neural network structure.
 

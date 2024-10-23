@@ -103,8 +103,6 @@ document.getElementById('bibiteInput').addEventListener('change', () => {
     fileUpload(files[0], $('bibiteInput'));
 }, false);
 
-drawBibite();
-
 let outputNodes = document.querySelectorAll('#outputNodes')[0];
 outputNodes.classList.add('separator-container');
 for (let outputNode in outputMapping) {
@@ -126,6 +124,8 @@ for (let gene of genes) {
         geneSlider.value = this.value;
     });
 };
+
+//drawBibite();
 
 function generateBibite() {
     if (document.querySelector('#bibitesForm').checkValidity() === false) {

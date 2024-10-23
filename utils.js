@@ -293,6 +293,9 @@ function generateSynapseElement(inputId = 0, outputId = 32, outPutWeight = 0, sy
 
 function generateGeneElement() {} // TODO
 
+/*
+* Update the options of the synapse elements based on the hidden nodes
+*/
 function updateSynapseOptions() {
     let synapses = document.getElementById('synapses').querySelectorAll('.synapse');
     for (let i = 0; i < synapses.length; i++) {
@@ -324,7 +327,12 @@ function updateSynapseOptions() {
 
 async function generateSprite(spritesheet_url, sprite_width, sprite_height, x, y) {
     let spritesheet = await loadImage(spritesheet_url);
-    return await createImageBitmap(spritesheet, x * sprite_width, y * sprite_height, sprite_width, sprite_height);
+    let canvas = document.createElement('canvas');
+    canvas.width = sprite_width;
+    canvas.height = sprite_height;
+    let ctx = canvas.getContext('2d');
+    ctx.drawImage(spritesheet, x * sprite_width, y * sprite_height, sprite_width, sprite_height, 0, 0, sprite_width, sprite_height);
+    return canvas;
 }
 
 async function loadImage(url) {
@@ -336,3 +344,120 @@ async function loadImage(url) {
     } );
     return img;
 }
+
+function changeColour(image, r, g, b) {
+    let ctx = image.getContext('2d');
+    ctx.globalAlpha=0.62;
+    ctx.globalCompositeOperation="source-atop";
+    ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+    ctx.fillRect(0, 0, image.width, image.height);
+    return image;
+}
+
+function geneToColor(r, g, b) {
+    const num1 = Math.min(r, g, b);
+    
+    const num2 = 1 + r - Math.max(g, b);
+    const num4 = 1 + g - Math.max(r, b);
+    const num6 = 1 + b - Math.max(r, g);
+    
+    const num3 = Math.max(0, Math.min(num2, 1));
+    const num5 = Math.max(0, Math.min(num4, 1));
+    const num7 = Math.max(0, Math.min(num6, 1));
+
+    return [(num3 - num1) * 255, (num5 - num1) * 255, (num7 - num1) * 255];
+}
+
+function geneToEyeColor(bodyColor, offset) {
+    let H;
+    let bodyColorHSV = RGBToHSV(bodyColor);
+    H = bodyColorHSV[0];
+    return HSVToRGB(H - offset, 1, 1);
+}
+
+function RGBToHSV(color) {
+    let r = color[0];
+    let g = color[1];
+    let b = color[2];
+    let max = Math.max(r, g, b);
+    let min = Math.min(r, g, b);
+    let h, s, v = max;
+    let d = max - min;
+    s = max === 0 ? 0 : d / max;
+    if (max === min) {
+        h = 0;
+    } else {
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    return [h, s, v];
+}
+
+function HSVToRGB(h, s, v) {
+    let r, g, b;
+    let i = Math.floor(h * 6);
+    let f = h * 6 - i;
+    let p = v * (1 - s);
+    let q = v * (1 - f * s);
+    let t = v * (1 - (1 - f) * s);
+    switch (i % 6) {
+        case 0: r = v, g = t, b = p; break;
+        case 1: r = q, g = v, b = p; break;
+        case 2: r = p, g = v, b = t; break;
+        case 3: r = p, g = q, b = v; break;
+        case 4: r = t, g = p, b = v; break;
+        case 5: r = v, g = p, b = q; break;
+    }
+    return [r, g, b];
+}
+
+/*
+      this.template = bibiteTemplate;
+
+      this.size = this.template.genes[3] * Mathf.Sqrt(BibiteGenes.GrowthAtMature(this.template.genes));
+      this.sizeIndex = ProceduralSpriteManager.Instance.ClosestSizeIndex(this.size);
+
+      this.BodyImage.sprite = ProceduralSpriteManager.Instance.RequestBodySprite(this.sizeIndex, 0);
+
+      this.Bibite.transform.localScale = Vector3.one * Mathf.Clamp(this.baseScale * (this.sqrtSizing ? Mathf.Sqrt(this.size) : this.size), 0.05f, this.maxScale);
+      this.FoodPreviewHolder.transform.localScale = Vector3.one / (this.sqrtSizing ? Mathf.Sqrt(this.size) : 1f);
+
+      this.r = this.template.genes[5];
+      this.g = this.template.genes[6];
+      this.b = this.template.genes[7];
+
+      Color color = BibiteGenes.GenesToColor(this.r, this.g, this.b);
+      this.BibiteMaterial.SetColor(BibiteTemplateGenePreviewer.Color1, color);
+      this.EyeMaterial.SetColor(BibiteTemplateGenePreviewer.Color1, color);
+
+      Material eyeMaterial = this.EyeMaterial;
+      int hueShift = BibiteTemplateGenePreviewer.HueShift;
+
+      BibiteTemplate template = this.template;
+      double num2 = template.genes[25];
+      eyeMaterial.SetFloat(hueShift, (float) num2);
+      float num3 = BibiteGenes.TotalOrganWAG(this.template.genes);
+      this.carn = this.template.genes[16];
+      this.herb = 1f - this.carn;
+      float f = this.template.genes[31] / num3;
+      this.MouthImage.sprite = ProceduralSpriteManager.Instance.RequestMouthSprite(this.sizeIndex, this.carn, Mathf.Sqrt(f));
+
+      this.Bibite.transform.rotation = Quaternion.Euler(0.0f, 0.0f, (float) (-90.0 - 2.0 * ((double) this.carn - 0.5) * 57.295780181884766 * (double) Mathf.Atan((float) (40.0 / (112.0 * (double) Mathf.Sqrt(this.size))))));
+      
+      this.PlantImage.color = new Color(1f, 1f, 1f, 4f * this.herb * this.herb);
+      this.PlantImage.rectTransform.localScale = Mathf.Sqrt(this.herb + 0.5f) * Vector3.one;
+      this.MeatImage.color = new Color(1f, 1f, 1f, 4f * this.carn * this.carn);
+      this.MeatImage.rectTransform.localScale = Mathf.Sqrt(this.carn + 0.5f) * Vector3.one;
+
+      float defenceProportion = this.template.genes[29] / num3;
+      this.ExoskeletonImage.sprite = ProceduralSpriteManager.Instance.RequestExoskeletonSprite(this.sizeIndex, 0, defenceProportion);
+      float radiusGene = this.template.genes[13];
+      float angleGene = this.template.genes[12];
+      this.EyesImage.sprite = ProceduralSpriteManager.Instance.RequestEyeSprite(this.sizeIndex, radiusGene, angleGene);
+      float speedGene = this.template.genes[4];
+      this.Arm1Image.sprite = ProceduralSpriteManager.Instance.RequestArmSprite(this.sizeIndex, speedGene);
+      this.Arm2Image.sprite = this.Arm1Image.sprite;*/

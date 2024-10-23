@@ -49,40 +49,39 @@
             </div>
             <div class="input-container">
                 <label for="genes">Genes</label>
-                <div class="options-preview-container">
                 <div class="separator-container" id="genes">
                     <div class="gene">
                         <label>Lay Time</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="5" step="0.00000000001" value="0" id="layTimeSlider" class="slider">
-                            <input type="number" id="layTime" step="0.00000000001" value="0" class="slider-number">
+                            <input type="range" min="1" max="51" step="0.00000000001" value="15" id="layTimeSlider" class="slider">
+                            <input type="number" id="layTime" step="0.00000000001" value="15" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Brood Time</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="100" step="0.00000000001" value="20" id="broodTimeSlider" class="slider">
+                            <input type="range" min="1" max="101" step="0.00000000001" value="20" id="broodTimeSlider" class="slider">
                             <input type="number" id="broodTime" step="0.00000000001" value="20" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Hatch Time</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="100" step="0.00000000001" value="10" id="hatchTimeSlider" class="slider">
+                            <input type="range" min="1" max="101" step="0.00000000001" value="10" id="hatchTimeSlider" class="slider">
                             <input type="number" id="hatchTime" step="0.00000000001" value="10" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Size Ratio</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="1" id="sizeRatioSlider" class="slider">
+                            <input type="range" min="0.05" max="2.55" step="0.00000000001" value="1" id="sizeRatioSlider" class="slider">
                             <input type="number" id="sizeRatio" step="0.00000000001" value="1" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Speed Ratio</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="1" id="speedRatioSlider" class="slider">
+                            <input type="range" min="0.01" max="2.5" step="0.00000000001" value="1" id="speedRatioSlider" class="slider">
                             <input type="number" id="speedRatio" step="0.00000000001" value="1" class="slider-number">
                         </div>
                     </div>
@@ -110,21 +109,21 @@
                     <div class="gene">
                         <label>Mutation Amount Sigma</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="1" step="0.00000000001" value="0.025" id="mutationAmountSigmaSlider" class="slider">
+                            <input type="range" min="0" max="0.25" step="0.00000000001" value="0.025" id="mutationAmountSigmaSlider" class="slider">
                             <input type="number" id="mutationAmountSigma" step="0.00000000001" value="0.025" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Average Mutation Number</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="4" id="averageMutationNumberSlider" class="slider">
+                            <input type="range" min="0" max="30" step="0.00000000001" value="4" id="averageMutationNumberSlider" class="slider">
                             <input type="number" id="averageMutationNumber" step="0.00000000001" value="4" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Brain Mutation Sigma</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="1" step="0.00000000001" value="0.1" id="brainMutationSigmaSlider" class="slider">
+                            <input type="range" min="0" max="0.25" step="0.00000000001" value="0.1" id="brainMutationSigmaSlider" class="slider">
                             <input type="number" id="brainMutationSigma" step="0.00000000001" value="0.1" class="slider-number">
                         </div>
                     </div>
@@ -138,168 +137,164 @@
                     <div class="gene">
                         <label>View Angle</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="360" step="0.00000000001" value="180" id="viewAngleSlider" class="slider">
-                            <input type="number" id="viewAngle" step="0.00000000001" value="180" class="slider-number">
+                            <input type="range" min="0" max="360" step="1" value="180" id="viewAngleSlider" class="slider">
+                            <input type="number" id="viewAngle" step="1" value="180" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>View Radius</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="200" step="0.00000000001" value="75" id="viewRadiusSlider" class="slider">
-                            <input type="number" id="viewRadius" step="0.00000000001" value="75" class="slider-number">
+                            <input type="range" min="0" max="200" step="0.1" value="75" id="viewRadiusSlider" class="slider">
+                            <input type="number" id="viewRadius" step="0.1" value="75" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Clock Speed</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="1" id="clockSpeedSlider" class="slider">
-                            <input type="number" id="clockSpeed" step="0.00000000001" value="1" class="slider-number">
+                            <input type="range" min="0.1" max="10.1" step="0.01" value="1" id="clockSpeedSlider" class="slider">
+                            <input type="number" id="clockSpeed" step="0.01" value="1" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Phero Sense</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="200" step="0.00000000001" value="160" id="pheroSenseSlider" class="slider">
-                            <input type="number" id="pheroSense" step="0.00000000001" value="160" class="slider-number">
+                            <input type="range" min="0" max="500" step="1" value="160" id="pheroSenseSlider" class="slider">
+                            <input type="number" id="pheroSense" step="1" value="160" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Diet</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="1" step="0.00000000001" value="0.3" id="dietSlider" class="slider">
-                            <input type="number" id="diet" step="0.00000000001" value="0.3" class="slider-number">
+                            <input type="range" min="0" max="1" step="0.01" value="0.3" id="dietSlider" class="slider">
+                            <input type="number" id="diet" step="0.01" value="0.3" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Herd Separation Weight</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="1" id="herdSeparationWeightSlider" class="slider">
-                            <input type="number" id="herdSeparationWeight" step="0.00000000001" value="1" class="slider-number">
+                            <input type="range" min="0" max="4" step="0.01" value="1" id="herdSeparationWeightSlider" class="slider">
+                            <input type="number" id="herdSeparationWeight" step="0.01" value="1" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Herd Alignment Weight</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="1.5" id="herdAlignmentWeightSlider" class="slider">
-                            <input type="number" id="herdAlignmentWeight" step="0.00000000001" value="1.5" class="slider-number">
+                            <input type="range" min="0" max="4" step="0.01" value="1.5" id="herdAlignmentWeightSlider" class="slider">
+                            <input type="number" id="herdAlignmentWeight" step="0.01" value="1.5" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Herd Cohesion Weight</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="1" id="herdCohesionWeightSlider" class="slider">
-                            <input type="number" id="herdCohesionWeight" step="0.00000000001" value="1" class="slider-number">
+                            <input type="range" min="0" max="4" step="0.01" value="1" id="herdCohesionWeightSlider" class="slider">
+                            <input type="number" id="herdCohesionWeight" step="0.01" value="1" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Herd Velocity Weight</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="0.25" id="herdVelocityWeightSlider" class="slider">
-                            <input type="number" id="herdVelocityWeight" step="0.00000000001" value="0.25" class="slider-number">
+                            <input type="range" min="0" max="1" step="0.01" value="0.25" id="herdVelocityWeightSlider" class="slider">
+                            <input type="number" id="herdVelocityWeight" step="0.01" value="0.25" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Herd Separation Distance</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="100" step="0.00000000001" value="35" id="herdSeparationDistanceSlider" class="slider">
-                            <input type="number" id="herdSeparationDistance" step="0.00000000001" value="35" class="slider-number">
+                            <input type="range" min="0" max="100" step="0.1" value="35" id="herdSeparationDistanceSlider" class="slider">
+                            <input type="number" id="herdSeparationDistance" step="0.1" value="35" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Growth Scale</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="1" step="0.00000000001" value="0.35" id="growthScaleSlider" class="slider">
-                            <input type="number" id="growthScale" step="0.00000000001" value="0.35" class="slider-number">
+                            <input type="range" min="0" max="2" step="0.001" value="0.35" id="growthScaleSlider" class="slider">
+                            <input type="number" id="growthScale" step="0.001" value="0.35" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Growth Maturity Factor</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="2" id="growthMaturityFactorSlider" class="slider">
-                            <input type="number" id="growthMaturityFactor" step="0.00000000001" value="2" class="slider-number">
+                            <input type="range" min="0" max="10" step="0.01" value="2" id="growthMaturityFactorSlider" class="slider">
+                            <input type="number" id="growthMaturityFactor" step="0.01" value="2" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Growth Maturity Exponent</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="1" id="growthMaturityExponentSlider" class="slider">
-                            <input type="number" id="growthMaturityExponent" step="0.00000000001" value="1" class="slider-number">
+                            <input type="range" min="0" max="10" step="0.01" value="1" id="growthMaturityExponentSlider" class="slider">
+                            <input type="number" id="growthMaturityExponent" step="0.01" value="1" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Eye Offset</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="1" step="0.00000000001" value="0.5" id="eyeOffsetSlider" class="slider">
-                            <input type="number" id="eyeOffset" step="0.00000000001" value="0.5" class="slider-number">
+                            <input type="range" min="0" max="1" step="0.01" value="0.5" id="eyeOffsetSlider" class="slider">
+                            <input type="number" id="eyeOffset" step="0.01" value="0.5" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Stomach WAG</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="5" id="stomachWAGSlider" class="slider">
+                            <input type="range" min="-1" max="9" step="0.00000000001" value="5" id="stomachWAGSlider" class="slider">
                             <input type="number" id="stomachWAG" step="0.00000000001" value="5" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Womb WAG</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="2.5" id="wombWAGSlider" class="slider">
-                            <input type="number" id="wombWAG" step="0.00000000001" value="2.5" class="slider-number">
+                            <input type="range" min="-1" max="9" step="0.00000000001" value="2.5" id="wombWAGSlider" class="slider">
+                            <input type="number" id="wombWAG" step="0.00000000001" value="1" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Fat WAG</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="2.5" id="fatWAGSlider" class="slider">
+                            <input type="range" min="-1" max="9" step="0.00000000001" value="2.5" id="fatWAGSlider" class="slider">
                             <input type="number" id="fatWAG" step="0.00000000001" value="2.5" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Armor WAG</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="1" step="0.00000000001" value="0.0668449253" id="armorWAGSlider" class="slider">
+                            <input type="range" min="-1" max="9" step="0.00000000001" value="0.0668449253" id="armorWAGSlider" class="slider">
                             <input type="number" id="armorWAG" step="0.00000000001" value="0.0668449253" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Throat WAG</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="1.3101604" id="throatWAGSlider" class="slider">
+                            <input type="range" min="0" max="9" step="0.00000000001" value="1.3101604" id="throatWAGSlider" class="slider">
                             <input type="number" id="throatWAG" step="0.00000000001" value="1.3101604" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Mouth Muscles WAG</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="1.0695188" id="mouthMusclesWAGSlider" class="slider">
+                            <input type="range" min="-1" max="9" step="0.00000000001" value="1.0695188" id="mouthMusclesWAGSlider" class="slider">
                             <input type="number" id="mouthMusclesWAG" step="0.00000000001" value="1.0695188" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Move Muscles WAG</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="10" step="0.00000000001" value="0.6550802" id="moveMusclesWAGSlider" class="slider">
+                            <input type="range" min="-1" max="9" step="0.00000000001" value="0.6550802" id="moveMusclesWAGSlider" class="slider">
                             <input type="number" id="moveMusclesWAG" step="0.00000000001" value="0.6550802" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Fat Storage Threshold</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="1" step="0.00000000001" value="0.5" id="fatStorageThresholdSlider" class="slider">
-                            <input type="number" id="fatStorageThreshold" step="0.00000000001" value="0.5" class="slider-number">
+                            <input type="range" min="0" max="1" step="0.001" value="0.5" id="fatStorageThresholdSlider" class="slider">
+                            <input type="number" id="fatStorageThreshold" step="0.001" value="0.5" class="slider-number">
                         </div>
                     </div>
                     <div class="gene">
                         <label>Fat Storage Deadband</label>
                         <div class="slider-container">
-                            <input type="range" min="0" max="1" step="0.00000000001" value="0.25" id="fatStorageDeadbandSlider" class="slider">
-                            <input type="number" id="fatStorageDeadband" step="0.00000000001" value="0.25" class="slider-number">
+                            <input type="range" min="0" max="0.5" step="0.001" value="0.25" id="fatStorageDeadbandSlider" class="slider">
+                            <input type="number" id="fatStorageDeadband" step="0.001" value="0.25" class="slider-number">
                         </div>
                     </div>
-                </div>
-                <div class="separator-container preview-container" id="previewContainer">
-                    <canvas id="previewCanvas" width="100" height="50"></canvas>
-                </div>
                 </div>
             </div>
         </form>
@@ -309,6 +304,9 @@
         <input type="checkbox" id="lightDarkCheck">
         <div class="lightDarkDecor"></div>
     </div>
+    <div class="preview-pip-container" id="genePipContainer">
+        <canvas id="previewCanvas"></canvas>
+    </div>
     <div class="popup-container" id="message">
         <div class="popup">
             <h2 id="messageTitle"></h2>
@@ -317,7 +315,7 @@
         </div>
     </div>
     <script src="./utils.js"></script>
-    <script src="./preview.js"></script>
+    <!--<script src="./preview.js"></script>-->
     <script src="./index.js"></script>
 </body>
 </html>
