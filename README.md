@@ -58,6 +58,7 @@ Ensure you have the following installed:
 - Graphical preview of the genes.
 - Graphical preview of the neural network structure.
 - Graphical editor for the neural network structure.
+- Multi-platform desktop app version.
 
 ## Contributing
 
