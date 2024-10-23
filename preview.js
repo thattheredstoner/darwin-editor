@@ -236,10 +236,10 @@ document.onscroll = () => {
             leftOffset = window.innerWidth - $("genePipContainer").offsetWidth - 25 + "px";
         }
         if (leftOffset !== $("genePipContainer").style.left) {
-            $("genePipContainer").style.transition = "left 0.3s";
+            $("genePipContainer").style.transition = "left 0.3s; opacity 0.4s";
             $("genePipContainer").style.left = leftOffset;
             setTimeout(() => {
-                $("genePipContainer").style.transition = "none";
+                $("genePipContainer").style.transition = "opacity 0.4s";
             }, 300);
         }
     } else if (window.scrollY < triggerOffset || window.scrollY > $("genes").offsetTop + $("genes").offsetHeight) {
@@ -250,10 +250,10 @@ document.onscroll = () => {
             leftOffset = window.innerWidth + $("genePipContainer").offsetWidth * 0.25 + "px";
         }
         if (leftOffset !== $("genePipContainer").style.left) {
-            $("genePipContainer").style.transition = "left 0.3s";
+            $("genePipContainer").style.transition = "left 0.3s; opacity 0.4s";
             $("genePipContainer").style.left = leftOffset;
             setTimeout(() => {
-                $("genePipContainer").style.transition = "none";
+                $("genePipContainer").style.transition = "opacity 0.4s";
             }, 300);
         }
     }
@@ -293,11 +293,11 @@ $("genePipContainer").addEventListener('mouseup', () => {
         previewPipY = window.innerHeight - $("genePipContainer").offsetHeight - 150
     }
 
-    $("genePipContainer").style.transition = "left 0.3s, top 0.3s";
+    $("genePipContainer").style.transition = "left 0.3s, top 0.3s, opacity 0.4s";
     $("genePipContainer").style.left = `${previewPipX}px`;
     $("genePipContainer").style.top = `${previewPipY}px`;
     setTimeout(() => {
-        $("genePipContainer").style.transition = "none";
+        $("genePipContainer").style.transition = "opacity 0.4s";
     }, 300);
 });
 

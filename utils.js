@@ -56,27 +56,31 @@ function fileUpload(file, fileInput = null) {
         let outputNodes = bibiteNodes.filter(node => Object.values(outputMapping).map(x => x[0]).includes(node.Index));
 
         for (let i = 0; i < outputNodes.length; i++) {
-            generateOutputNodeElement(outputNodes[i].Index, outputNodes[i].baseActivation);
+            generateOutputNodeElement(outputNodes[i].Index, Math.floor(outputNodes[i].baseActivation * 10000000000) / 10000000000);
         }
 
         let hiddenNodes = bibiteNodes.filter(node => !Object.values(outputMapping).map(x => x[0]).includes(node.Index));
 
         for (let i = 0; i < hiddenNodes.length; i++) {
-            generateHiddenNodeElement(hiddenNodes[i].Index, hiddenNodes[i].Type, hiddenNodes[i].baseActivation);
+            generateHiddenNodeElement(hiddenNodes[i].Index, hiddenNodes[i].Type, Math.floor(hiddenNodes[i].baseActivation * 10000000000) / 10000000000);
         }
 
         $('synapses').innerHTML = '';
         for (let i = 0; i < bibite.synapses.length; i++) {
             let input = hiddenNodes.find(node => node.Index === bibite.synapses[i].NodeIn) !== undefined;
             let output = hiddenNodes.find(node => node.Index === bibite.synapses[i].NodeOut) !== undefined;
-            generateSynapseElement(bibite.synapses[i].NodeIn, bibite.synapses[i].NodeOut, bibite.synapses[i].Weight, bibite.synapses[i].En, input, output);
+            generateSynapseElement(bibite.synapses[i].NodeIn, bibite.synapses[i].NodeOut, Math.floor(bibite.synapses[i].Weight * 10000000000) / 10000000000, bibite.synapses[i].En, input, output);
         }
 
         let genes = document.getElementById('genes').children;
         for (let gene of genes) {
             let geneName = gene.querySelector('label').innerText;
-            gene.querySelector('.slider-container input[type="number"]').value = bibite.genes[geneName.replace(/\s/g, '')];
-            gene.querySelector('.slider-container input[type="range"]').value = bibite.genes[geneName.replace(/\s/g, '')];
+            let tempVal = bibite.genes[geneName.replace(/\s/g, '')];
+            let precision = 1 / parseFloat(gene.querySelector('.slider-container input[type="range"]').step);
+            console.log(parseFloat(gene.querySelector('.slider-container input[type="range"]').step))
+            tempVal = Math.floor(tempVal * precision) / precision;
+            gene.querySelector('.slider-container input[type="number"]').value = tempVal;
+            gene.querySelector('.slider-container input[type="range"]').value = tempVal;
         }
     };
 }

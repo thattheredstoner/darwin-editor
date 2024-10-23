@@ -98,6 +98,18 @@ bibiteDropZone.addEventListener('drop', (e) => {
     fileUpload(dt.files[0], $('bibiteInput'));
 })
 
+/*document.getElementById('bibiteDropZone').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.showOpenFilePicker({ // This function doesn't work in Firefox & Brave
+        types: [
+            {
+                description: "Bibite Template",
+            },
+        ],
+        startIn: "desktop"//"%AppData%/../LocalLow/The Bibites/The Bibites/Bibites/Templates"
+    });
+});*/
+
 document.getElementById('bibiteInput').addEventListener('change', () => {
     const files = $('bibiteInput').files;
     fileUpload(files[0], $('bibiteInput'));
