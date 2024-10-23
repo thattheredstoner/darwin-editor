@@ -78,6 +78,10 @@ Contributions are welcome! Please follow these steps to contribute:
     ```
 5. Open a pull request.
 
+Don't know programming? No problem! You can contribute by reporting bugs, suggesting features, or providing feedback.
+
+We are also looking for contributions to an icon! If you are a designer and would like to contribute an icon for the project, please reach out.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
