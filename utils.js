@@ -31,11 +31,18 @@ function closeMessage() {
 * @param {File} file - The file to be parsed
 */
 function fileUpload(file, fileInput = null) {
+    if (!file.name.includes('.bb8template')) {
+        msg('Error', 'The file you are trying to upload is not a valid file.');
+        if (fileInput !== null) {
+            fileInput.value = '';
+        }
+        return;
+    }
     const reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function() {
         const bibite = JSON.parse(reader.result);
-        if (bibite.version !== "0.6" && bibite.version !== "0.6.0.1") {
+        if (bibite === undefined || (bibite.version !== "0.6" && bibite.version !== "0.6.0.1") ) {
             msg('Error', 'The file you are trying to upload is not compatible with this version of the editor.');
             if (fileInput !== null) {
                 fileInput.value = '';
@@ -46,9 +53,6 @@ function fileUpload(file, fileInput = null) {
         document.getElementById('speciesName').value = bibite.speciesName;
         document.getElementById('description').value = bibite.description.replace(/\u000b/g, '\r\n');
         changeHeight(document.getElementById('description'));
-        if (document.getElementById('description').value === '') {
-            document.getElementById('description').value = 'No description.';
-        }
         document.getElementById('version').value = bibite.version;
 
         let nodes = document.getElementById('nodes');
@@ -352,12 +356,23 @@ async function loadImage(url) {
 }
 
 function changeColour(image, r, g, b) {
+    let baseCanvas = document.createElement('canvas');
+    baseCanvas.width = image.width;
+    baseCanvas.height = image.height;
+    let baseCtx = baseCanvas.getContext('2d');
+    baseCtx.drawImage(image, 0, 0);
+    baseCtx.globalAlpha = 1;
+    baseCtx.globalCompositeOperation = "source-atop";
+    baseCtx.fillStyle = `rgb(${r}, ${g}, ${b})`
+    baseCtx.fillRect(0, 0, baseCanvas.width, baseCanvas.height);
+    baseCtx.globalAlpha = 0.5;
+    baseCtx.drawImage(image, 0, 0);
     /*let ctx = image.getContext('2d');
     ctx.globalAlpha = 0;
     ctx.globalCompositeOperation = "source-atop";
     ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
     ctx.fillRect(0, 0, image.width, image.height);*/
-    let ctx = image.getContext('2d');
+    /*let ctx = image.getContext('2d');
     let imageData = ctx.getImageData(0, 0, image.width, image.height);
     let data = imageData.data;
     for (let i = 0; i < data.length; i += 4) {
@@ -365,8 +380,9 @@ function changeColour(image, r, g, b) {
         data[i + 1] = (data[i + 1] + g) - 100;
         data[i + 2] = (data[i + 2] + b) - 100;
     }
-    ctx.putImageData(imageData, 0, 0);
-    return image;
+    ctx.putImageData(imageData, 0, 0);*/
+    //return image;
+    return baseCanvas;
 }
 
 function geneToColor(r, g, b) {

@@ -130,7 +130,7 @@ async function drawBibite() {
         int hueShift = BibiteTemplateGenePreviewer.HueShift;
         double num2 = (double) template.genes[25]
         eyeMaterial.SetFloat(hueShift, (float) num2);
-*/
+    */
     
     let tempColor = geneToColor(genes[5], genes[6], genes[7]);
     console.log(tempColor);
